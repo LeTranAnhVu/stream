@@ -1,38 +1,30 @@
-import React from "react";
-import {BrowserRouter, Link, Route} from "react-router-dom";
-
-const PageOne = () => {
-    return (
-        <div>page one
-            <div>
-                <Link to="/page2">page2</Link>
-            </div>
-        </div>
-    );
-}
-
-const PageTwo = () => {
-    return (
-        <div>page two
-            <div>
-                <Link to="/">back</Link>
-            </div>
-
-        </div>
-    );
-}
+import React from 'react';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+import StreamCreate from './streams/StreamCreate';
+import StreamDelete from './streams/StreamDelete';
+import StreamEdit from './streams/StreamEdit';
+import StreamList from './streams/StreamList';
+import StreamShow from './streams/StreamShow';
+import Header from './commons/Header';
 
 const App = () => {
-    return (
+  return (
+    <section id="app">
+      <Header/>
+      <main className="ui container">
         <BrowserRouter>
-            <div>
-                <Route path="/" exact component={PageOne}/>
-                <Route path="/page2"  component={PageTwo}/>
-            </div>
+          <div>
+            <Route path="/" exact component={StreamList}/>
+            <Route path="/streams/new" component={StreamCreate}/>
+            <Route path="/streams/edit" component={StreamEdit}/>
+            <Route path="/streams/delete" component={StreamDelete}/>
+            <Route path="/streams/show" component={StreamShow}/>
+          </div>
         </BrowserRouter>
+      </main>
+    </section>
 
-    )
+  );
 };
-
 
 export default App;
