@@ -10,9 +10,9 @@ import Header from './commons/Header';
 const App = () => {
   return (
     <section id="app">
-      <Header/>
-      <main className="ui container">
-        <BrowserRouter>
+      <BrowserRouter>
+        <Header/>
+        <main className="ui container">
           <div>
             <Route path="/" exact component={StreamList}/>
             <Route path="/streams/new" component={StreamCreate}/>
@@ -20,9 +20,9 @@ const App = () => {
             <Route path="/streams/delete" component={StreamDelete}/>
             <Route path="/streams/show" component={StreamShow}/>
           </div>
-        </BrowserRouter>
-      </main>
-    </section>
+        </main>
+      </BrowserRouter>
+      </section>
 
   );
 };

@@ -1,15 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className="ui stackable menu">
-        <div className="item">
-          {/*<img src="/images/logo.png">*/}
-          Streams
+    <div className="ui container">
+      <div className="ui secondary pointing menu">
+        <Link to="/" className="item">Streams</Link>
+
+        <div className="right menu">
+          <Link to="/" className="item">All Streams</Link>
+          {/*<a className="item">________</a>*/}
+          <Link to="/" className="item">Sign-in</Link>
         </div>
-        <a className="item">Features</a>
-        <a className="item">Testimonials</a>
-        <a className="item">Sign-in</a>
+      </div>
+
+
     </div>
   );
 };
