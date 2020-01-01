@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import {signIn, signOut} from "../actions";
 
 class GoogleAuth extends React.Component {
-    state = {isSignedIn: null};
-
     componentDidMount() {
         window.gapi.load('client:auth2', () => {
             window.gapi.client.init({
@@ -12,24 +10,19 @@ class GoogleAuth extends React.Component {
                 scope: 'email'
             }).then(() => {
                 this.auth = window.gapi.auth2.getAuthInstance();
-                this.updateStateSignIn();
+                this.onAuthChange();
                 this.auth.isSignedIn.listen(this.onAuthChange);
             })
         });
     }
 
-    updateStateSignIn = () => {
+    onAuthChange = () => {
         const authState = this.auth.isSignedIn.get();
-        console.log('ahihi');
         if(authState){
-            this.props.signIn();
+            this.props.signIn(this.auth.currentUser.get().getId());
         }else {
             this.props.signOut();
         }
-    };
-
-    onAuthChange = () => {
-        this.updateStateSignIn();
     };
 
     onSignInClick = () => {
@@ -40,10 +33,10 @@ class GoogleAuth extends React.Component {
     };
 
     renderAuthButton = () => {
-        if (this.props.authState.isSignedIn === true) {
+        if (this.props.isSignedIn === true) {
             return <button className="ui red google button" onClick={this.onSignOutClick}><i className="google icon"/> Sign
                 Out</button>
-        } else if (this.props.authState.isSignedIn === false) {
+        } else if (this.props.isSignedIn === false) {
             return <button className="ui red google button" onClick={this.onSignInClick}><i className="google icon"/> Sign
                 In with Google</button>
         } else {
@@ -59,7 +52,7 @@ class GoogleAuth extends React.Component {
 
 const mapStateToProps = (state) => {
     console.log(state);
-    return {authState: state.authState};
+    return {isSignedIn: state.authState.isSignedIn};
 };
 
 export default connect(mapStateToProps, {signIn, signOut})(GoogleAuth);
