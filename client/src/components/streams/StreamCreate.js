@@ -1,58 +1,32 @@
 import React from 'react';
-import {Field, reduxForm} from "redux-form";
+import {connect} from "react-redux";
+import {createStream} from "../../actions";
+import {Link} from "react-router-dom";
+import StreamForm from "./StreamForm";
 
 class StreamCreate extends React.Component {
 
-    showError = ({error, touched}) => {
-        if(touched && error) {
-            return (
-                <div className="ui error message">
-                    <div className="list">{error}</div>
-                </div>
-            )
-        }
+    onSubmit = (formValues) => {
+        this.props.createStream(formValues);
     };
-
-    inputRender = ({input, label, meta}) => {
-        console.log(meta);
-        const fieldClass = `field ${meta.touched && meta.error ? 'error': ''}`;
-        return (
-            <div className={fieldClass}>
-                <label>{label}</label>
-                <input type="text" {...input}/>
-                {this.showError(meta)}
-            </div>
-        )
-    };
-
-    onSubmit(formValues) {
-        console.log(formValues);
-    }
 
     render() {
         return (
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                <Field name="title" component={this.inputRender} label="Enter title"/>
-                <Field name="description" component={this.inputRender} label="Enter description"/>
-                <button className="ui button primary">Submit</button>
-            </form>
+            <div className="stream-wrapper">
+                <div className="stream-header">
+                    <h3>Stream Create</h3>
+                    <Link to="/" className="ui button primary">
+                        List </Link>
+                </div>
+                <StreamForm onSubmit={this.onSubmit}/>
+            </div>
         );
     }
 }
 
-const validate = formValues => {
-    const errors = {};
-    if (!formValues.title) {
-        errors.title = "You must enter title";
+const mapStateToProps = (state) => {
+    return {
+        auth: state.authState
     }
-    if (!formValues.description) {
-        errors.description = "You must enter description";
-    }
-
-    return errors;
 };
-
-export default reduxForm({
-    form: "streamCreate",
-    validate
-})(StreamCreate);
+export default connect(mapStateToProps, {createStream})(StreamCreate);
