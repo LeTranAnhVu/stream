@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from "redux-form";
 import {fetchStream, editStream} from "../../actions";
 import {Link} from "react-router-dom";
 import StreamForm from "./StreamForm";

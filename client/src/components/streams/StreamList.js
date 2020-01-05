@@ -41,7 +41,7 @@ class StreamList extends React.Component {
                 <div className="item stream-item" key={stream.id}>
                     {this.renderEditAndDelete(stream)}
                     <div className="content">
-                        <div className="header">{stream.title}</div>
+                        <Link to={`/streams/${stream.id}`} className="header">{stream.title}</Link>
                         <div className="description">
                             <p>
                                 {stream.description}
